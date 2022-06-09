@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 )
 
 library(FluxnetEO)
+library(ggplot2)
+library(dplyr)
 ```
 
 ## Demo data
@@ -32,8 +34,7 @@ Larger demo data is stored in the package data directory (see below).
 
 ## Reading FluxnetEO netcdf summary data
 
-The main functionality of this small package is to provide an easy routine to access FluxnetEO data in R for further synthesis.
-
+The main functionality of this small package is to provide an easy routine to access FluxnetEO data in R for further synthesis. The below code shows you how to read in the cutout data from a given path. Note that this routine executed on a directory containing for example the MODIS data will summarize this data in one big tidy data frame (~3 GB in memory, 600 MB as compressed RDS file).
 
 ```{r}
 # list all cutout summary files
@@ -44,6 +45,8 @@ files <- list.files(
   recursive = TRUE
 )
 
+# loop over all files and bind
+# them in one data frame
 data <- lapply(files, function(file){
   feo_read_nc(
     file = file
@@ -52,5 +55,31 @@ data <- lapply(files, function(file){
 
 data <- do.call("rbind", data)
 
+# print the data
 print(head(data))
 ```
+
+### Plot data
+
+
+```{r }
+# convert date string to date object
+# for nice plotting
+data <- data %>%
+  mutate(
+    date = as.Date(date)
+  )
+
+# quick ggplot graph of the MODIS Aqua daytime
+# land surface temperature (LST)
+ggplot(data) +
+  geom_point(
+    aes(
+      date,
+      LST_AQUA_Day
+    )
+  ) +
+  theme_classic()
+```
+
+

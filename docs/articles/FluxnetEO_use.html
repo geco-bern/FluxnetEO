@@ -123,7 +123,11 @@ below).</p>
 <h2 id="reading-fluxneteo-netcdf-summary-data">Reading FluxnetEO netcdf summary data<a class="anchor" aria-label="anchor" href="#reading-fluxneteo-netcdf-summary-data"></a>
 </h2>
 <p>The main functionality of this small package is to provide an easy
-routine to access FluxnetEO data in R for further synthesis.</p>
+routine to access FluxnetEO data in R for further synthesis. The below
+code shows you how to read in the cutout data from a given path. Note
+that this routine executed on a directory containing for example the
+MODIS data will summarize this data in one big tidy data frame (~3 GB in
+memory, 600 MB as compressed RDS file).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># list all cutout summary files</span>
 <span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>
@@ -133,6 +137,8 @@ routine to access FluxnetEO data in R for further synthesis.</p>
   recursive <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
 
+<span class="co"># loop over all files and bind</span>
+<span class="co"># them in one data frame</span>
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">files</span>, <span class="kw">function</span><span class="op">(</span><span class="va">file</span><span class="op">)</span><span class="op">{</span>
   <span class="fu"><a href="../reference/feo_read_nc.html">feo_read_nc</a></span><span class="op">(</span>
     file <span class="op">=</span> <span class="va">file</span>
@@ -141,6 +147,7 @@ routine to access FluxnetEO data in R for further synthesis.</p>
 
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">data</span><span class="op">)</span>
 
+<span class="co"># print the data</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;   EVI EVI_N EVI_NSTD EVI_gapfilltype NDVI NDVI_N NDVI_NSTD NDVI_gapfilltype</span>
 <span class="co">#&gt; 1 NaN     0      NaN             999  NaN      0       NaN              999</span>
@@ -317,13 +324,36 @@ routine to access FluxnetEO data in R for further synthesis.</p>
 <span class="co">#&gt; 4                                 4             288.7238                      0</span>
 <span class="co">#&gt; 5                                 4             288.7238                      0</span>
 <span class="co">#&gt; 6                                 4             288.7238                      0</span>
-<span class="co">#&gt;   LST_NSTD_AQUA_Night_VZA40 LST_gapfilltype_AQUA_Night_VZA40       time   site</span>
+<span class="co">#&gt;   LST_NSTD_AQUA_Night_VZA40 LST_gapfilltype_AQUA_Night_VZA40       date   site</span>
 <span class="co">#&gt; 1                       NaN                                4 2000-01-01 CG-Tch</span>
 <span class="co">#&gt; 2                       NaN                                4 2000-01-02 CG-Tch</span>
 <span class="co">#&gt; 3                       NaN                                4 2000-01-03 CG-Tch</span>
 <span class="co">#&gt; 4                       NaN                                4 2000-01-04 CG-Tch</span>
 <span class="co">#&gt; 5                       NaN                                4 2000-01-05 CG-Tch</span>
 <span class="co">#&gt; 6                       NaN                                4 2000-01-06 CG-Tch</span></code></pre></div>
+<div class="section level3">
+<h3 id="plot-data">Plot data<a class="anchor" aria-label="anchor" href="#plot-data"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># convert date string to date object</span>
+<span class="co"># for nice plotting</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>
+    date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>
+  <span class="op">)</span>
+
+<span class="co"># quick ggplot graph of the MODIS Aqua daytime</span>
+<span class="co"># land surface temperature (LST)</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>
+    <span class="fu">aes</span><span class="op">(</span>
+      <span class="va">date</span>,
+      <span class="va">LST_AQUA_Day</span>
+    <span class="op">)</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="FluxnetEO_use_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+</div>
 </div>
   </div>
 

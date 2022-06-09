@@ -45,7 +45,7 @@ feo_read_nc <- function(
   colnames(df) <- vars
 
   # add time column
-  df$time <- time_date
+  df$date <- time_date
   df$site <- site
 
   # return data frame
