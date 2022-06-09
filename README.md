@@ -3,7 +3,11 @@
 ## Purpose
 
 This package provides some functions to read, process or visualize [FluxnetEO data](https://bg.copernicus.org/articles/19/2805/2022/). Crucially, it also provides clean meta-data to aid in further synthesis and re-analysis. This code remains separate from our 'flux data kit' in order to provide people with the
-tools to compile their own derivative more easily.
+tools to compile their own derivative products more easily.
+
+## Base data & size restrictions
+
+Notes on the datasets. Data is provided as zipped archives and total considerable amounts of data, which requires ample storage space. The MODIS dataset has a compressed size of ~32 GB, which results in an uncompressed size of ~68 GB. The LandSat dataset exceeds 150 GB compressed and exceeds 400 GB uncompressed (estimate as still downloading as of writing). Take this into consideration before proceeding to download and or process the data.
 
 ## Installation
 
@@ -13,7 +17,7 @@ To install and load the latest version of the rpmodel package (development relea
 ```r
 if(!require(devtools)){install.packages(devtools)}
 devtools::install_github( "computationales/FluxnetEO", build_vignettes = TRUE )
-library(rpmodel)
+library(FluxnetEO)
 ```
 
 ## References
