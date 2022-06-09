@@ -1,0 +1,56 @@
+---
+title: "FluxnetEO usage"
+author: "Koen Hufkens"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FluxnetEO usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(FluxnetEO)
+```
+
+## Demo data
+
+The package includes data from the `CG-Tch` site for testing and tutorial purposes, as well an internal site list derived from the FluxnetEO publication (including small corrections as presented).
+
+The internal site list can be called using:
+
+```{r}
+library(FluxnetEO)
+head(fluxnet_sites)
+```
+
+Larger demo data is stored in the package data directory (see below).
+
+## Reading FluxnetEO netcdf summary data
+
+The main functionality of this small package is to provide an easy routine to access FluxnetEO data in R for further synthesis.
+
+
+```{r}
+# list all cutout summary files
+files <- list.files(
+  system.file(package = "FluxnetEO", "extdata"),
+  utils::glob2rx("*_cutout.nc"),
+  full.names = TRUE,
+  recursive = TRUE
+)
+
+data <- lapply(files, function(file){
+  feo_read_nc(
+    file = file
+  )
+})
+
+data <- do.call("rbind", data)
+
+print(head(data))
+```

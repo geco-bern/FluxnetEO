@@ -1,0 +1,33 @@
+Package: FluxnetEO
+Title: Wrangle FluxnetEO data
+Version: 1.0
+Authors@R: c(
+            person(
+               family = "Hufkens",
+               given = "Koen",
+               email = "koen.hufkens@gmail.com",
+               role = c("aut", "cre"),
+               comment = c(ORCID = "0000-0002-5070-8109"))
+           )
+Description: Simple package containing functions to process FluxnetEO data
+  into either concise tidy data frames, or otherwise managable formats.
+URL: https://github.com/computationales/FluxnetEO
+BugReports: https://github.com/computationales/FluxnetEO/issues
+License: GPL-3
+Depends:
+    R (>= 3.6)
+Imports:
+    ncdf4
+LazyData: true
+LazyDataCompression: xz
+ByteCompile: true
+NeedsCompilation: yes
+RoxygenNote: 7.1.2
+Suggests:
+    covr,
+    testthat,
+    rmarkdown,
+    ggplot2,
+    knitr
+VignetteBuilder: knitr
+Encoding: UTF-8
