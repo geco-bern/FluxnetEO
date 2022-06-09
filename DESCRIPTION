@@ -13,7 +13,7 @@ Description: Simple package containing functions to process FluxnetEO data
   into either concise tidy data frames, or otherwise managable formats.
 URL: https://github.com/computationales/FluxnetEO
 BugReports: https://github.com/computationales/FluxnetEO/issues
-License: GPL-3
+License: AGPL-3
 Depends:
     R (>= 3.6)
 Imports:
