@@ -25,8 +25,7 @@ feo_read_nc <- function(
   # when using bind_cols() or joins)
   time_date <- as.character(as.POSIXct(
       time,
-      origin = "1970-01-01",
-      tz = "GMT"
+      origin = "1970-01-01"
     )
   )
 

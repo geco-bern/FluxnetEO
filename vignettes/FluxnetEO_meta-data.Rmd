@@ -1,0 +1,43 @@
+---
+title: "FluxnetEO meta-data"
+author: "Koen Hufkens"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FluxnetEO meta-data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(FluxnetEO)
+library(ggplot2)
+library(dplyr)
+```
+
+Below you find a list of all the fields included in the data product as well
+as a short description. This allows for easier interpretation of the data and
+quicker correct implementation into derived products and analysis. We list data fields by product i.e., for both the full scenes as well as the averaged cutouts.
+
+## average cutouts
+
+Average time series per site that represents the area within 1 km radius of the site (`average_cutout`). Here fields marked with `N` per band/product indicate how many valid pixels contribute to the spatial average. `NSTD` gives the standard deviation across these pixels.
+
+### gap filling
+
+Each data field has a complementary data layer (`gapfilltype`) with an integer flagging which data point is of original good quality (=0) or in which gap-filling step a given point has been imputed in the gap-filling procedure (flags ≥ 1). The meaning of the quality flag is given in the file attributes (CHECK)
+
+See section 3.2.2 of the GCB paper describing all gap filling steps. In all cases the gap filling refers to the sequential stage in the described process.
+
+### LST
+
+For both TERRA and AQUA columns marked `VZA40` have a geometric correction (Ermida et al., 2018) with a view zenith angle of 40 degrees, those marked with `VZA0` are corrected at nadir. LST values without a VZA field specifiers provide data at varying view angles.
+
+1. outlier filter for each LST data stream and check that any daytime LST is higher than any nighttime LST per subpixel and day
+2. optionally apply a geometrical correction per subpixel
+3. optionally aggregate over a selection of subpixels in the cutout per time step and LST data stream
+4.gap-fill the aggregated time series or each subpixel for all four MODIS LSTs simultaneously.

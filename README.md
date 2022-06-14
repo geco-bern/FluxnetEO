@@ -9,6 +9,10 @@ tools to compile their own derivative products more easily.
 
 Notes on the datasets. Data is provided as zipped archives and total considerable amounts of data, which requires ample storage space. The MODIS dataset has a compressed size of ~32 GB, which results in an uncompressed size of ~68 GB. The LandSat dataset exceeds 150 GB compressed and exceeds 400 GB uncompressed (estimate as still downloading as of writing). Take this into consideration before proceeding to download and or process the data.
 
+## Further documentation
+
+We refer to the vignettes for further documentation and use cases.
+
 ## Installation
 
 ### Development release
@@ -22,7 +26,7 @@ library(FluxnetEO)
 
 ## References
 
-Walther, S., Besnard, S., Nelson, J. A., El-Madany, T. S., Migliavacca, M., Weber, U., Carvalhais, N., Ermida, S. L., Brümmer, C., Schrader, F., Prokushkin, A. S., Panov, A. V., and Jung, M.: Technical note: A view from space on global flux towers by MODIS and Landsat: the FluxnetEO data set, Biogeosciences, 19, 2805–2840, https://doi.org/10.5194/bg-19-2805-2022, 2022.
+Walther, S., Besnard, S., Nelson, J. A., El-Madany, T. S., Migliavacca, M., Weber, U., Carvalhais, N., Ermida, S. L., Brümmer, C., Schrader, F., Prokushkin, A. S., Panov, A. V., and Jung, M.: Technical note: A view from space on global flux towers by MODIS and Landsat: the FluxnetEO data set, Biogeosciences, 19, 2805–2840, [https://doi.org/10.5194/bg-19-2805-2022](https://doi.org/10.5194/bg-19-2805-2022), 2022.
 
 ## Acknowledgement
 
