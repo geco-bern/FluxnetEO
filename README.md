@@ -1,4 +1,4 @@
-[![R-CMD-check](https://github.com/computationales/FluxnetEO/workflows/R-CMD-check/badge.svg)](https://github.com/computationales/FluxnetEO/actions)
+[![R-CMD-check](https://github.com/geco-bern/FluxnetEO/workflows/R-CMD-check/badge.svg)](https://github.com/geco-bern/FluxnetEO/actions)
 
 ## Purpose
 
@@ -20,7 +20,7 @@ To install and load the latest version of the rpmodel package (development relea
 
 ```r
 if(!require(devtools)){install.packages(devtools)}
-devtools::install_github( "computationales/FluxnetEO", build_vignettes = TRUE )
+devtools::install_github( "geco-bern/FluxnetEO", build_vignettes = TRUE )
 library(FluxnetEO)
 ```
 
