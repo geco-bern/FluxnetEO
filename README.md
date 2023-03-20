@@ -19,8 +19,8 @@ We refer to the vignettes for further documentation and use cases.
 To install and load the latest version of the rpmodel package (development release, not yet on CRAN) run the following command in your R terminal:
 
 ```r
-if(!require(devtools)){install.packages(devtools)}
-devtools::install_github( "geco-bern/FluxnetEO", build_vignettes = TRUE )
+if(!require(remotes)){install.packages(remotes)}
+remotes::install_github( "geco-bern/FluxnetEO", build_vignettes = TRUE )
 library(FluxnetEO)
 ```
 
